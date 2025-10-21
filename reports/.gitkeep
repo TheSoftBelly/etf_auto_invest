@@ -1,0 +1,2 @@
+# This file ensures the reports/ directory is tracked by git
+# All files inside reports/ are gitignored except this file

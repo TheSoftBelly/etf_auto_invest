@@ -1,0 +1,116 @@
+# ==================================
+# 민감 정보 (절대 커밋 금지!)
+# ==================================
+config.yaml
+config*.yaml
+*.key
+*.secret
+.env
+
+# ==================================
+# Python
+# ==================================
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+venv/
+env/
+ENV/
+.venv
+
+# ==================================
+# 데이터 및 리포트 파일
+# ==================================
+# data 폴더 내용물만 제외 (폴더 구조는 유지)
+data/*
+!data/.gitkeep
+
+# reports 폴더 내용물만 제외 (폴더 구조는 유지)
+reports/*
+!reports/.gitkeep
+
+# CSV/Excel 파일
+*.csv
+*.xlsx
+*.xls
+
+# 로그 파일
+*.log
+logs/
+
+# ==================================
+# IDE 및 에디터
+# ==================================
+# VSCode
+.vscode/
+*.code-workspace
+
+# PyCharm
+.idea/
+*.iml
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+*.ipynb
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# ==================================
+# OS 관련
+# ==================================
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Linux
+*~
+
+# ==================================
+# 기타
+# ==================================
+# 백업 파일
+*.bak
+*.backup
+*.tmp
+*.swp
+*.swo
+
+# 차트 이미지 (필요시 제외)
+charts/
+*.png
+*.jpg
+*.jpeg
+
+# Claude Code 작업 파일
+CLAUDE.md

@@ -17,7 +17,7 @@
 
 ```bash
 # Conda 환경 생성 (권장)
-conda create -n auto-trade python=3.13
+conda create -n auto-trade python3=3.13
 conda activate auto-trade
 
 # 또는 venv 사용
@@ -48,10 +48,11 @@ cp config.yaml.example config.yaml
 ### 정상 실행 (스케줄러 시작)
 
 ```bash
-python main.py
+python3 main.py
 ```
 
 자동으로 다음 작업이 스케줄링됩니다:
+
 - 아침 리포트: 매일 09:00
 - 정기 매수 체크: 매일 09:05
 - 하락 매수 체크: 30분마다 (장 중)
@@ -62,7 +63,7 @@ python main.py
 ### 테스트 모드
 
 ```bash
-python main.py test
+python3 main.py test
 ```
 
 개별 기능을 수동으로 테스트할 수 있습니다.
@@ -70,7 +71,7 @@ python main.py test
 ### 상태 확인
 
 ```bash
-python main.py status
+python3 main.py status
 ```
 
 계좌 상태 및 포트폴리오 현황을 확인합니다.
@@ -83,11 +84,11 @@ python main.py status
 
 ```yaml
 STRATEGY:
-  monthly_regular_amount: 500000  # 월 정기 매수 금액
-  dip_buy_amount: 250000         # 하락 매수 금액
-  dip_threshold: -5.0            # 하락 기준 (%)
-  buy_day: 1                     # 매수일 (1~28)
-  allocation_method: "WEIGHTED"  # 배분 방식
+  monthly_regular_amount: 500000 # 월 정기 매수 금액
+  dip_buy_amount: 250000 # 하락 매수 금액
+  dip_threshold: -5.0 # 하락 기준 (%)
+  buy_day: 1 # 매수일 (1~28)
+  allocation_method: "WEIGHTED" # 배분 방식
 ```
 
 ### ETF 추가/수정
@@ -97,17 +98,17 @@ ETF_LIST:
   - code: "133690"
     name: "TIGER 미국나스닥100"
     category: "US_TECH"
-    weight: 3                    # WEIGHTED 모드 가중치
-    custom_ratio: 0.40           # CUSTOM 모드 비율
-    priority: 1                  # 우선순위 (낮을수록 우선)
-    enabled: true                # 활성화 여부
+    weight: 3 # WEIGHTED 모드 가중치
+    custom_ratio: 0.40 # CUSTOM 모드 비율
+    priority: 1 # 우선순위 (낮을수록 우선)
+    enabled: true # 활성화 여부
 ```
 
 ### 자동매매 모드
 
 ```yaml
 ADVANCED:
-  auto_trade: false  # false: 알림만, true: 자동 매매
+  auto_trade: false # false: 알림만, true: 자동 매매
 ```
 
 ⚠️ **주의**: 처음에는 반드시 `false`로 설정하고 알림만 받아보세요!
@@ -135,7 +136,7 @@ ADVANCED:
 conda activate auto-trade
 
 # 실행
-python main.py
+python3 main.py
 ```
 
 ## 주의사항

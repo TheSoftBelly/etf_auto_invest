@@ -8,26 +8,51 @@ import io
 
 # 한글 폰트 설정 (Mac)
 import platform
+import os
+from matplotlib import font_manager, rc
 
-if platform.system() == 'Darwin':  # Mac
-    plt.rcParams['font.family'] = 'AppleGothic'
-elif platform.system() == 'Windows':
-    plt.rcParams['font.family'] = 'Malgun Gothic'
-else:  # Linux
-    plt.rcParams['font.family'] = 'NanumGothic'
+# 경고 메시지 숨기기
+import warnings
+warnings.filterwarnings('ignore', category=UserWarning)
 
-plt.rcParams['axes.unicode_minus'] = False  # 마이너스 기호 깨짐 방지
+def get_korean_font_prop():
+    """한글 폰트 속성 반환"""
+    if platform.system() == 'Darwin':  # Mac
+        # NanumGothic 폰트 직접 로드
+        nanum_paths = [
+            '/Users/joon/Library/Fonts/NanumGothic-Regular.ttf',
+            '/Library/Fonts/NanumGothic-Regular.ttf',
+            os.path.expanduser('~/Library/Fonts/NanumGothic-Regular.ttf')
+        ]
+
+        for font_path in nanum_paths:
+            if os.path.exists(font_path):
+                print(f"✅ 한글 폰트 로드: {font_path}")
+                return font_manager.FontProperties(fname=font_path)
+
+        # 대체: AppleGothic
+        apple_path = '/System/Library/Fonts/Supplemental/AppleGothic.ttf'
+        if os.path.exists(apple_path):
+            print(f"✅ 한글 폰트 로드: AppleGothic")
+            return font_manager.FontProperties(fname=apple_path)
+
+    print("⚠️  한글 폰트를 찾을 수 없습니다.")
+    return None
+
+# 한글 폰트 속성 가져오기
+korean_font = get_korean_font_prop()
+plt.rcParams['axes.unicode_minus'] = False
 
 class ChartGenerator:
     """투자 차트 생성기"""
-    
+
     def __init__(self, output_dir='charts'):
         self.output_dir = Path(output_dir)
         self.output_dir.mkdir(exist_ok=True)
-        
+
         # 차트 스타일
         plt.style.use('seaborn-v0_8-darkgrid')
-        
+
         # 색상 팔레트
         self.colors = {
             'primary': '#3498db',
@@ -64,13 +89,18 @@ class ChartGenerator:
             colors=colors,
             textprops={'fontsize': 10, 'weight': 'bold'}
         )
-        
+
+        # 한글 폰트 적용
+        for text in texts:
+            if korean_font:
+                text.set_fontproperties(korean_font)
+
         # 퍼센트 텍스트 스타일
         for autotext in autotexts:
             autotext.set_color('white')
             autotext.set_fontsize(11)
-        
-        ax.set_title('📊 포트폴리오 구성', fontsize=16, weight='bold', pad=20)
+
+        ax.set_title('포트폴리오 구성', fontsize=16, weight='bold', pad=20, fontproperties=korean_font if korean_font else None)
         
         # 범례 추가
         total = sum(values)
@@ -78,7 +108,7 @@ class ChartGenerator:
             f"{name}: {value:,.0f}원 ({value/total*100:.1f}%)"
             for name, value in zip(names, values)
         ]
-        ax.legend(legend_labels, loc='center left', bbox_to_anchor=(1, 0, 0.5, 1))
+        legend = ax.legend(legend_labels, loc='center left', bbox_to_anchor=(1, 0, 0.5, 1), prop=korean_font if korean_font else None)
         
         plt.tight_layout()
         
@@ -122,9 +152,14 @@ class ChartGenerator:
                    fontsize=10, weight='bold')
         
         ax.axvline(x=0, color='black', linewidth=0.8, linestyle='-')
-        ax.set_xlabel('수익률 (%)', fontsize=12, weight='bold')
-        ax.set_title('📈 ETF별 수익률', fontsize=16, weight='bold', pad=20)
+        ax.set_xlabel('수익률 (%)', fontsize=12, weight='bold', fontproperties=korean_font if korean_font else None)
+        ax.set_title('ETF별 수익률', fontsize=16, weight='bold', pad=20, fontproperties=korean_font if korean_font else None)
         ax.grid(axis='x', alpha=0.3)
+
+        # Y축 레이블에 한글 폰트 적용
+        if korean_font:
+            for label in ax.get_yticklabels():
+                label.set_fontproperties(korean_font)
         
         plt.tight_layout()
         
@@ -307,7 +342,12 @@ class ChartGenerator:
             autotext.set_fontsize(12)
             autotext.set_weight('bold')
         
-        ax.set_title('📂 카테고리별 자산 분포', fontsize=16, weight='bold', pad=20)
+        ax.set_title('카테고리별 자산 분포', fontsize=16, weight='bold', pad=20, fontproperties=korean_font if korean_font else None)
+
+        # 레이블에 한글 폰트 적용
+        if korean_font:
+            for text in ax.texts:
+                text.set_fontproperties(korean_font)
         
         plt.tight_layout()
         
